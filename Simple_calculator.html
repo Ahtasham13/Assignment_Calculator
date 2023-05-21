@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple-Calculator</title>
+    <style>
+        .calculator {
+            width: 255px;
+            margin: 0 auto;
+            padding: 12px;
+            background-color: #040404;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .screen {
+            width: 93%;
+            height: 38px;
+            margin-bottom: 9px;
+            border: 2px solid #b82323;
+            padding: 10px;
+            font-size: 20px;
+            text-align: right;
+            color: aqua;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 1rem;
+            border-radius: 20px;
+            color: #b82323;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="screen" id="screen"></div>
+        <button class="button" onclick="appendToScreen('7')">7</button>
+        <button class="button" onclick="appendToScreen('8')">8</button>
+        <button class="button" onclick="appendToScreen('9')">9</button>
+        <button class="button" onclick="appendToScreen('+')">+</button>
+        <br>
+        <button class="button" onclick="appendToScreen('4')">4</button>
+        <button class="button" onclick="appendToScreen('5')">5</button>
+        <button class="button" onclick="appendToScreen('6')">6</button>
+        <button class="button" onclick="appendToScreen('-')">-</button>
+        <br>
+        <button class="button" onclick="appendToScreen('1')">1</button>
+        <button class="button" onclick="appendToScreen('2')">2</button>
+        <button class="button" onclick="appendToScreen('3')">3</button>
+        <button class="button" onclick="appendToScreen('*')">*</button>
+        <br>
+        <button class="button" onclick="appendToScreen('0')">0</button>
+        <button class="button" onclick="appendToScreen('.')">.</button>
+        <button class="button" onclick="calculate()">=</button>
+        <button class="button" onclick="appendToScreen('/')">/</button>
+        <br>
+        <button class="button" onclick="clearScreen()">C</button>
+        <button class="button" onclick="calculatePercentage()">%</button>
+        <button class="button" onclick="backspace()">&#9003;</button>
+        <button class="button" id="power-button" onclick="togglePower()">On</button>
+
+    </div>
+
+    <script>
+        var power = true;
+
+        function togglePower() {
+            power = !power; // Toggles the power status
+            var buttons = document.getElementsByClassName("button");
+            var powerButton = document.getElementById("power-button");
+
+            // Disable or enable all buttons based on power status
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = !power;
+            }
+
+            // Update power button text and style based on power status
+            powerButton.innerHTML = power ? "On" : "Off";
+            powerButton.style.backgroundColor = power ? "#4CAF50" : "#f44336";
+            powerButton.style.color = power ? "#fff" : "#000";
+
+            // Clear the screen if power is turned off
+            if (!power) {
+                clearScreen();
+            }
+        }
+
+        function appendToScreen(value) {
+            var screen = document.getElementById("screen");
+            screen.innerHTML += value;
+        }
+
+        function calculate() {
+            var screen = document.getElementById("screen");
+            var expression = screen.innerHTML;
+            var result = eval(expression);
+            screen.innerHTML = result;
+        }
+        function calculatePercentage() {
+            var screen = document.getElementById("screen");
+            var expression = screen.innerHTML;
+            var result = eval(expression) / 100;
+            screen.innerHTML = result;
+        }
+        function backspace() {
+            var screen = document.getElementById("screen");
+            var expression = screen.innerHTML;
+            screen.innerHTML = expression.slice(0, -1);
+        }
+
+        function clearScreen() {
+            var screen = document.getElementById("screen");
+            screen.innerHTML = "";
+        }
+    </script>
+</body>
+
+</html>
